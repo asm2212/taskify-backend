@@ -21,7 +21,7 @@ export class DatabaseService implements OnModuleInit {
       this.logger.debug(`Host: ${this.connection.host}`);
     } catch (error: unknown) {
 
-     let errorMessage = 'Database connection failed';
+    let errorMessage = 'Database connection failed';
 
       if (error instanceof Error) {
         errorMessage += `: ${error.message}`;
