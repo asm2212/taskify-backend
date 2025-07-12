@@ -3,14 +3,17 @@ import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { AuthExceptionFilter } from './common/filters/auth-exception.filter';
 import { TaskExceptionFilter } from './common/filters/task-exception.filter';
+import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: ['log', 'error', 'warn'],
+  });
 
   // Enable CORS
   app.enableCors({
-    origin: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    origin: process.env.ALLOWED_ORIGINS?.split(',') || '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
 
@@ -21,6 +24,9 @@ async function bootstrap() {
     new TaskExceptionFilter(),
   );
 
-  await app.listen(process.env.PORT || 3000);
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
+  new Logger('Bootstrap').log(`Server running on port ${port}`);
 }
+
 bootstrap();
