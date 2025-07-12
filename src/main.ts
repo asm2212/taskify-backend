@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { AuthExceptionFilter } from './common/filters/auth-exception.filter';
+import { TaskExceptionFilter } from './common/filters/task-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,7 +15,11 @@ async function bootstrap() {
   });
 
   // Global exception filter
-  app.useGlobalFilters(new HttpExceptionFilter(), new AuthExceptionFilter());
+  app.useGlobalFilters(
+    new HttpExceptionFilter(),
+    new AuthExceptionFilter(),
+    new TaskExceptionFilter(),
+  );
 
   await app.listen(process.env.PORT || 3000);
 }

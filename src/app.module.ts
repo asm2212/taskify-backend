@@ -7,6 +7,7 @@ import { DatabaseService } from './database/database.provider';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { TasksModule } from './tasks/tasks.module';
 // import { APP_GUARD } from '@nestjs/core';
 // import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
@@ -14,6 +15,7 @@ import { UsersModule } from './users/users.module';
   imports: [
     AuthModule,
     UsersModule,
+    TasksModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
